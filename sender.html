@@ -1,0 +1,65 @@
+<body onunload="removecookie()"> 
+<p>Type into the text box below and watch the text 
+   appear automatically in the receiver.</p>
+
+<form name="sender">
+<input type="text" name="message" size="30" value="">
+<input type="Button" value="Send" onclick="sendmessage();">
+</form>
+
+<script type="text/javascript"><!--
+        var today = new Date();
+          var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+        function sendmessage(){
+            setCookie("MESSAGE",  document.forms['sender'].elements['message'].value);
+            alert("Cookie Saved");
+        }
+    
+    
+          function setCookie(name, value)
+          {
+
+            document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+          }
+
+        
+          function getCookie(name)
+         {
+    
+                
+                if (document.cookie.length>0)
+                {
+                  c_start=document.cookie.indexOf(name + "=");
+                  if (c_start != -1)
+                    {
+                    c_start=c_start + name.length+1;
+                    c_end=document.cookie.indexOf(";",c_start);
+                    if (c_end==-1) c_end=document.cookie.length;
+
+
+                        return  unescape(document.cookie.substring(c_start,c_end));
+                    }
+                  }
+                return "";
+          }     
+    
+//--></script>
+
+
+<form name="receiver">
+<input type="text" name="message" size="100" value="" readonly disabled>
+    <input type="Button" value="Receive" onclick="checkMessage();">
+</form>
+
+<script type="text/javascript"><!--
+
+        function checkMessage() {
+
+           var text = getCookie("MESSAGE");
+            alert(text);
+            document.forms['receiver'].elements['message'].value = text;
+           // setTimeout(updateMessage, 100);
+        }
+    //--></script>
+</body>

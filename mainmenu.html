@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <title>Main Menu - Innovakids</title>
+<meta property="description" 
+  content="Classroom Learning Management System designed to change they way we teach and learn. Innovakids is designed to be a fully integrated system for administration and Learning.  Digital coursework, student/teacher collaboration, assessment, and customization are only some of the many popular features of the Innovakids." />
+    <META 
+content="Classroom Learning Management System,Classroom online learning, School administration software, Learning Software,Online Quiz, Online Test,Student Management System,Innovakids, School software"
+name=keywords>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.cycle.all.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+<script src="js/jquery.js" type="text/javascript"></script>
+    
+<script type="text/javascript">
+
+    
+        var Type;
+         var Url;
+         var Data;
+         var ContentType;
+         var DataType;
+         var ProcessData;    
+    
+    
+          // Original JavaScript code by Chirp Internet: www.chirp.com.au
+          // Please acknowledge use of this code by including this header.
+
+          var today = new Date();
+          var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+
+         function loading()
+          {
+                document.getElementById('DistrictName').innerHTML = "Loading...";
+
+
+                if( getCookie('schoolname') == '' )
+                {
+                    alert('School Name is missing.  Please login to another School'); 
+                    window.location="admin-login.html";
+
+                }
+                else
+                {
+                  
+                     document.getElementById('UserName').innerHTML  = 'User: '+getCookie('username');
+                     document.getElementById('SchoolName').innerHTML  = getCookie('schoolname')+" ("+ getCookie('schoolno')+")";
+                     document.getElementById('DistrictName').innerHTML  = getCookie('districtname');
+                }
+
+
+                  LoadSchool();
+                LoadYear();
+                LoadTerm();
+
+          }
+
+
+
+         function SchoolNoChangeEvent(selectObj)
+         {
+
+
+             var idx = selectObj.selectedIndex; 
+
+
+             var strSchoolNo = selectObj.options[idx].value; 
+
+             alert("You have Changed Schools to "+ selectObj.options[idx].text); 
+
+
+             setCookie("schoolno", strSchoolNo );
+             
+             document.getElementById('SchoolName').innerHTML  = selectObj.options[idx].text;
+             setCookie("schoolname",selectObj.options[idx].text)
+
+             window.location="mainmenu.html";
+
+
+         }
+
+         function YearChangeEvent(selectObj)
+         {
+
+
+             var idx = selectObj.selectedIndex; 
+
+             var strSchoolNo = selectObj.options[idx].value; 
+
+             alert("You have Changed Year to "+ selectObj.options[idx].text); 
+
+             setCookie("schoolyear", strSchoolNo );
+             
+           
+
+
+             window.location="mainmenu.html";
+
+
+         }
+
+    
+      function TermChangeEvent(selectObj)
+         {
+
+
+             var idx = selectObj.selectedIndex; 
+
+             var strSchoolNo = selectObj.options[idx].value; 
+
+             alert("You have Changed Term to "+ selectObj.options[idx].text); 
+
+             setCookie("schoolterm", strSchoolNo );
+          
+             window.location="mainmenu.html";
+
+
+         }
+        
+         function LoadSchool() {
+                         
+             var schoolno = getCookie('schoolno');
+             var district = getCookie('district');
+                
+            if( district == "" ) {
+             alert("District is Empty! Log out and back in");   
+            }
+            
+             Type = "POST";
+             Url = "school.svc/GetSchool";
+             Data = '{"District": "' + district + '"}';
+             ContentType = "application/json; charset=utf-8";
+             DataType = "json"; 
+             ProcessData = true;
+             CallSchoolService();
+        
+
+         }
+     function LoadYear() {
+                         
+             var schoolno = getCookie('schoolno');
+             var district = getCookie('district');
+                                
+            if( district == "" ) {
+             alert("Year is Empty! Log out and back in");   
+            }
+            
+             Type = "POST";
+             Url = "school.svc/GetYear";
+             Data = '{"District": "' + district + '"}';
+             ContentType = "application/json; charset=utf-8";
+             DataType = "json"; 
+             ProcessData = true;
+             CallYearService();
+        
+
+         }
+    
+     function LoadTerm() {
+                         
+             var schoolno = getCookie('schoolno');
+             var district = getCookie('district');
+                                
+            if( district == "" ) {
+             alert("District is Empty! Log out and back in");   
+            }
+            
+             Type = "POST";
+             Url = "school.svc/GetTerm";
+             Data = '{"District": "' + district + '"}';
+             ContentType = "application/json; charset=utf-8";
+             DataType = "json"; 
+             ProcessData = true;
+             CallTermService();
+        
+
+         }
+    
+         //Generic function to call AXMX/WCF  Service        
+         function CallSchoolService() {
+             $.ajax({
+                 type: Type, //GET or POST or PUT or DELETE verb
+                 url: Url, // Location of the service
+                 data: Data, //Data sent to server
+                 contentType: ContentType, // content type sent to server
+                 dataType: DataType, //Expected data format from server
+                 processdata: ProcessData, //True or False
+                 success: function (msg) {//On Successfull service call
+                     SchoolServiceSucceeded(msg);
+                 },
+                 error: SchoolServiceFailed// When Service call fails
+             });
+         }
+
+             function CallYearService() {
+             $.ajax({
+                 type: Type, //GET or POST or PUT or DELETE verb
+                 url: Url, // Location of the service
+                 data: Data, //Data sent to server
+                 contentType: ContentType, // content type sent to server
+                 dataType: DataType, //Expected data format from server
+                 processdata: ProcessData, //True or False
+                 success: function (msg) {//On Successfull service call
+                     YearServiceSucceeded(msg);
+                 },
+                 error: SchoolServiceFailed// When Service call fails
+             });
+         }
+    
+      function CallTermService() {
+             $.ajax({
+                 type: Type, //GET or POST or PUT or DELETE verb
+                 url: Url, // Location of the service
+                 data: Data, //Data sent to server
+                 contentType: ContentType, // content type sent to server
+                 dataType: DataType, //Expected data format from server
+                 processdata: ProcessData, //True or False
+                 success: function (msg) {//On Successfull service call
+                     TermServiceSucceeded(msg);
+                 },
+                 error: SchoolServiceFailed// When Service call fails
+             });
+         }
+    
+        function SchoolServiceSucceeded(result) {
+           
+                         
+             if (DataType == "json") {
+
+               resultObject = result.GetSchoolResult;
+                 
+               var select = document.getElementById("SelectedSchool"); 
+ 
+
+                for(var i = 0; i < resultObject.length; i++) {
+                    var opt = resultObject[i];
+                    var el = document.createElement("option");
+                    el.textContent = opt[1];
+                    el.value = opt[5];
+                    select.appendChild(el);
+                }
+                 
+                var strSchoolNo = getCookie('schoolno');
+      
+                 for(var i=0; i < document.getElementById("SelectedSchool").options.length; i++)
+                 {
+
+                    if(document.getElementById("SelectedSchool").options[i].value == strSchoolNo) {
+                      document.getElementById("SelectedSchool").selectedIndex = i;
+
+                      document.getElementById("SelectedSchool").focus();  
+                        
+                      break;
+                    }
+                 }
+        
+                       
+        
+                 
+                 
+             }
+
+         }
+
+    
+     function YearServiceSucceeded(result) {
+           
+                         
+             if (DataType == "json") {
+
+               resultObject = result.GetYearResult;
+                 
+               var select = document.getElementById("SelectedYear"); 
+ 
+
+                for(var i = 0; i < resultObject.length; i++) {
+                    var opt = resultObject[i];
+                    var el = document.createElement("option");
+                    el.textContent = opt[1];
+                    el.value = opt[5];
+                    select.appendChild(el);
+                }
+                 
+              
+                 
+                   var strYear = getCookie('schoolyear');
+
+                 for(var i=0; i < document.getElementById("SelectedYear").options.length; i++)
+                 {
+
+                    if(document.getElementById("SelectedYear").options[i].value == strYear) {
+                      document.getElementById("SelectedYear").selectedIndex = i;
+
+                      document.getElementById("SelectedYear").focus();  
+                        
+                      break;
+                    }
+                 }
+        
+                 
+                       
+                 
+                 
+             }
+
+         }
+
+     function TermServiceSucceeded(result) {
+           
+                         
+             if (DataType == "json") {
+
+               resultObject = result.GetTermResult;
+                 
+               var select = document.getElementById("SelectedTerm"); 
+ 
+
+                for(var i = 0; i < resultObject.length; i++) {
+                    var opt = resultObject[i];
+                    var el = document.createElement("option");
+                    el.textContent = opt[1];
+                    el.value = opt[5];
+                    select.appendChild(el);
+                }
+                 
+               
+        
+                 
+                   var strTerm = getCookie('schoolterm');
+      
+                 for(var i=0; i < document.getElementById("SelectedTerm").options.length; i++)
+                 {
+
+                    if(document.getElementById("SelectedTerm").options[i].value == strTerm) {
+                      document.getElementById("SelectedTerm").selectedIndex = i;
+
+                      document.getElementById("SelectedTerm").focus();  
+                        
+                      break;
+                    }
+                 }
+        
+                 
+                 
+             }
+
+         }
+
+         function SchoolServiceFailed(xhr) {
+            
+             alert("Service Call Failed - Try Logging Out and Back in!");
+             
+             if (xhr.responseText) {
+                 var err = xhr.responseText;
+                 if (err)
+                                   alert("Error Accessing Data. "+err);
+                 else
+                   alert("Unknown server error. ");
+             }
+             return;
+         }
+    
+     
+    
+    
+          function setCookie(name, value)
+          {
+                document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+          }
+
+         function getCookie(name)
+         {
+
+
+                if (document.cookie.length>0)
+                {
+                  c_start=document.cookie.indexOf(name + "=");
+                  if (c_start != -1)
+                    {
+                    c_start=c_start + name.length+1;
+                    c_end=document.cookie.indexOf(";",c_start);
+                    if (c_end==-1) c_end=document.cookie.length;
+                       return unescape(document.cookie.substring(c_start,c_end));
+                    }
+                  }
+                return "";
+          }   
+
+    
+    
+         $(document).ready(
+         function () {
+             //WCFJSON();
+         }
+         );
+       
+    </script>
+  <!-- Google Font: Open Sans -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="./css/font-awesome.min.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="./css/mvpready-admin.css">
+  <link rel="stylesheet" href="./css/mvpready-flat.css">
+  <!-- <link href="./css/custom.css" rel="stylesheet">-->
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class=" " onload="loading()" >
+
+<div id="wrapper">
+
+ <header class="navbar navbar-inverse" role="banner">
+
+    <div class="container">
+     <br />
+        <label for="DistrictName" id="DistrictName"  style="font-size:20px;color:white">District: SBCSS</label>
+       &nbsp;&nbsp; <label for="SchoolName" id="SchoolName"  style="font-size:20px;color:white">Innovakids Middle School</label>
+  
+    </div> <!-- /.container -->
+
+  </header>
+
+  <div class="mainnav">
+
+    <div class="container">
+
+      <a class="mainnav-toggle" data-toggle="collapse" data-target=".mainnav-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-bars"></i>
+      </a>
+
+      <nav class="collapse mainnav-collapse" role="navigation">
+
+       
+
+        <ul class="mainnav-menu">
+
+          <li class="dropdown active">
+                <a href="indexadmin.html" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                School
+                <i class="mainnav-caret"></i>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="account-school.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;School Manager
+                </a>
+              </li>
+
+              <li>
+                <a href="./dashboard-2.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Accounting Manager
+                </a>
+              </li>
+
+              <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Teacher Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Parent Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Registration
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-2.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Inventory Control
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;School Website Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Afterschool Programs
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Newsletter Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Auto Email Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;PTA Manager
+                </a>
+              </li>
+               <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Event Calendar
+                </a>
+              </li>
+               <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Board Manager
+                </a>
+              </li>
+              <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;District/Enterprise Manager
+                </a>
+              </li>
+                <li>
+                <a href="./dashboard-3.html">
+                <i class="fa fa-dashboard"></i> 
+                &nbsp;&nbsp;Innovakids Store
+                </a>
+              </li>
+                </ul>
+          </li>
+
+
+          <li class="dropdown ">
+
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+            Classes
+            <i class="mainnav-caret"></i>                                       
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+
+              <li>
+                <a href="account-classes.html">
+                <i class="fa fa-bars"></i> 
+                &nbsp;&nbsp;Class Manager
+                </a>
+              </li>
+
+              <li>
+                <a href="./components-popups.html">
+                <i class="fa fa-calendar-o"></i> 
+                &nbsp;&nbsp;Waiting Lists
+                </a>
+              </li>
+
+              <li>
+                <a href="./components-validation.html">
+                <i class="fa fa-check"></i> 
+                &nbsp;&nbsp;Registration
+                </a>
+              </li>
+
+              <li class="dropdown-submenu">
+
+                <a tabindex="-1" href="#">
+                <i class="fa fa-lock"></i> 
+                &nbsp;&nbsp;Lessons
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="./account-lesson.html">
+                    <i class="fa fa-unlock"></i> 
+                    &nbsp;&nbsp;Lesson Manager
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="./account-login-social.html">
+                    <i class="fa fa-unlock"></i> 
+                    &nbsp;&nbsp;Lesson Plan Resources
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="./account-signup.html">
+                    <i class="fa fa-star"></i> 
+                    &nbsp;&nbsp;Lesson Schedules
+                    </a>
+                    </li>
+
+                  <li>
+                    <a href="./account-forgot.html">
+                    <i class="fa fa-envelope"></i> 
+                    &nbsp;&nbsp;Class Rubrics
+                    </a>
+                  </li>
+                   <li>
+                    <a href="./account-forgot.html">
+                    <i class="fa fa-envelope"></i> 
+                    &nbsp;&nbsp;Lesson Discussions
+                    </a>
+                  </li>
+                   <li>
+                    <a href="./account-forgot.html">
+                    <i class="fa fa-envelope"></i> 
+                    &nbsp;&nbsp;Lesson Assignments
+                    </a>
+                  </li>
+                     <li>
+                    <a href="./account-forgot.html">
+                    <i class="fa fa-envelope"></i> 
+                    &nbsp;&nbsp;Lesson Packet Store
+                    </a>
+                  </li>
+                   <li>
+                    <a href="./account-forgot.html">
+                    <i class="fa fa-envelope"></i> 
+                    &nbsp;&nbsp;Reports/Analysis
+                    </a>
+                  </li>
+                </ul>
+              </li> 
+              <li>
+                <a href="./components-datatables.html">
+                <i class="fa fa-table"></i> 
+                &nbsp;&nbsp;Fee Manager
+                </a>
+              </li>
+
+              <li>
+                <a href="./components-gallery.html">
+                <i class="fa fa-picture-o"></i> 
+                &nbsp;&nbsp;Attendance
+                </a>
+              </li>
+
+              <li>
+                <a href="./components-charts.html">
+                <i class="fa fa-bar-chart-o"></i> 
+                &nbsp;&nbsp;Class Events
+                </a>
+              </li>               
+            </ul>
+          </li>
+
+
+          <li class="dropdown ">
+
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+            Students
+            <i class="mainnav-caret"></i>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="./account-student.html">
+                <i class="fa fa-money"></i> 
+                &nbsp;&nbsp;Student Manager
+                </a>
+              </li>
+
+              <li>
+                <a href="./page-profile.html">
+                <i class="fa fa-user"></i> 
+                &nbsp;&nbsp;Award and Certificates
+                </a>
+              </li>
+
+              <li>
+                <a href="./page-settings.html">
+                <i class="fa fa-cogs"></i> 
+                &nbsp;&nbsp;Discipline
+                </a>
+              </li>
+
+              <li>
+                <a href="./page-profile.html">
+                <i class="fa fa-user"></i>  
+                &nbsp;&nbsp;Observations
+                </a>
+              </li>
+               <li>
+                <a href="./page-profile.html">
+                <i class="fa fa-user"></i> 
+                &nbsp;&nbsp;Student Schedules
+                </a>
+              </li>
+               <li>
+                <a href="./page-profile.html">
+                <i class="fa fa-bell"></i> 
+                &nbsp;&nbsp;Fees and Fines
+                </a>
+              </li>
+               <li>
+                 <a href="./page-profile.html">
+                <i class="fa fa-user"></i> 
+                &nbsp;&nbsp;Textbook Manager
+                </a>
+              </li>
+              <li>
+                <a href="./page-faq.html">
+                <i class="fa fa-bell"></i> 
+                &nbsp;&nbsp;Library
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="dropdown ">
+
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+            Academics
+            <i class="mainnav-caret"></i>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="./page-notifications.html">
+                <i class="fa fa-bell"></i> 
+                &nbsp;&nbsp;Subject Manager
+                </a>
+              </li>                     
+              <li>
+                <a href="./extras-icons.html">
+                <i class="fa fa-smile-o"></i> 
+                &nbsp;&nbsp;Core Standards
+                </a>
+              </li> 
+
+                 <li>
+                <a href="./extras-icons.html">
+                <i class="fa fa-smile-o"></i> 
+                &nbsp;&nbsp;Pacing Guides
+                </a>
+              </li> 
+                 <li>
+                <a href="./extras-icons.html">
+                <i class="fa fa-smile-o"></i> 
+                &nbsp;&nbsp;Standardized Tests
+                </a>
+              </li> 
+              <li>
+                <a href="./extras-icons.html">
+                <i class="fa fa-smile-o"></i> 
+                &nbsp;&nbsp;Departments
+                </a>
+              </li> 
+
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">
+                <i class="fa fa-bars"></i> 
+                &nbsp;&nbsp;Tutoring
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="./page-404.html">
+                    <i class="fa fa-bars"></i> 
+                    &nbsp;&nbsp;Tutoring Schedules
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="./page-500.html">
+                    <i class="fa fa-bars"></i> 
+                    &nbsp;&nbsp;Tutoring Resources
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+
+            </ul>
+
+          </li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">    
+      
+          <li class="dropdown navbar-profile">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+              <img src="./img/circlekids.png" class="navbar-profile-avatar" alt="">
+              <span class="navbar-profile-label">rod@rod.me &nbsp;</span>
+              <i class="fa fa-caret-down"></i>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+
+              <li>
+                <a href="account-profile.html">
+                  <i class="fa fa-user"></i> 
+                  &nbsp;&nbsp;My Profile
+                </a>
+              </li>
+
+              <li>
+                <a href="./page-pricing.html">
+                  <i class="fa fa-dollar"></i> 
+                  &nbsp;&nbsp;Plans & Billing
+                </a>
+              </li>
+
+              <li>
+                <a href="./account-settings.html">
+                  <i class="fa fa-cogs"></i> 
+                  &nbsp;&nbsp;Settings
+                </a>
+              </li>
+
+              <li class="divider"></li>
+
+              <li>
+                <a href="./account-login.html">
+                  <i class="fa fa-sign-out"></i> 
+                  &nbsp;&nbsp;Logout
+                </a>
+              </li>
+                  <li class="divider"></li>
+                  <li class="">
+            <a href="./mainmenu.html">Dashboard</a>
+          </li>    
+
+          <li class="">
+            <a href="./account-schedule.html">Schedule</a>
+          </li>      
+
+          <li class="">
+            <a href="./account-tasks.html">Tasks</a>
+          </li>
+
+          <li class="active">
+            <a href="./account-reports.html">Reports</a>
+          </li>   
+
+          <li class="">
+            <a href="./account-contact.html">Contact</a>
+          </li>     
+
+            </ul>
+         
+          </li>
+
+        </ul>
+      </nav>
+
+    </div> <!-- /.container -->
+
+  </div> <!-- /.mainnav -->
+
+  <div class="content">
+
+    <div class="container">
+
+        <div class="row">
+
+          <div class="col-md-4 col-sm-5">
+
+            <div class="portlet">
+
+              <h4 class="portlet-title">
+             
+                      <a href="innovakidslogolarge.png" >
+                            <img src="innovakidslogolarge.png"  alt="Online Classroom" width="250" height="80" />
+                 </a>
+                 
+               <br /><br />
+               <u>Admin Dashboard</u>
+              </h4>
+                
+                <h4 class="portlet-title">
+            <label for="Year" id="Year"  style="font-size:12px">School Year</label><br />
+       <select id="SelectedYear" name="SelectedYear" class="form-control parsley-validated" data-required="true" onchange="javascript:YearChangeEvent(this);">
+                  </select>
+      <hr>
+                <label for="Term" id="Term"  style="font-size:12px">Term: Fall</label><br />
+            <select id="SelectedTerm" name="SelectedTerm" class="form-control parsley-validated" data-required="true" onchange="javascript:TermChangeEvent(this);">
+                  </select>
+               <hr>
+              
+                <label for="UserName"  id="UserName" style="font-size:12px">User: None</label><br />
+                
+                  </h4>
+                
+                
+               <div class="portlet-body">                
+                 <h4 class="portlet-title">
+                   <label for="validateSelect">Selected School</label>
+                     
+                  <select id="SelectedSchool" name="SelectedSchool" class="form-control parsley-validated" data-required="true" onchange="javascript:SchoolNoChangeEvent(this);">
+                                      
+                  </select>
+                     
+                     
+                     
+                 </h4>
+              </div> <!-- /.portlet-body -->
+ 
+              <div class="portlet-body">                
+             
+              <div class="list-group">  
+ </ br> </ br></ br></ br>
+            <a href="account-classes.html" class="list-group-item">
+              <i class="fa fa-asterisk text-primary"></i> &nbsp;&nbsp;Classes
+
+              <i class="fa fa-chevron-right list-group-chevron"></i>
+            </a> 
+
+            <a href="javascript:;" class="list-group-item">
+              <i class="fa fa-book text-primary"></i> &nbsp;&nbsp;Active Lessons
+
+              <i class="fa fa-chevron-right list-group-chevron"></i>
+              <span class="badge">3</span>
+            </a> 
+
+            <a href="javascript:;" class="list-group-item">
+              <i class="fa fa-envelope text-primary"></i> &nbsp;&nbsp;Active Assignments
+
+              <i class="fa fa-chevron-right list-group-chevron"></i>
+            </a> 
+
+            <a href="javascript:;" class="list-group-item">
+              <i class="fa fa-group text-primary"></i> &nbsp;&nbsp;Students
+
+              <i class="fa fa-chevron-right list-group-chevron"></i>
+            </a> 
+
+            <a href="javascript:;" class="list-group-item">
+              <i class="fa fa-cog text-primary"></i> &nbsp;&nbsp;Schools
+
+              <i class="fa fa-chevron-right list-group-chevron"></i>
+            </a> 
+          </div> <!-- /.list-group -->
+
+          
+
+                <h4 class="portlet-title">
+                  <u>Student Level Breakdown </u>
+                </h4>
+
+              
+                  
+                  <div class="progress-stat">
+                      
+                    <div class="progress-stat-label">
+                      % At Risk
+                    </div>
+                    
+                    <div class="progress-stat-value">
+                      77.7%
+                    </div>
+                    
+                    <div class="progress progress-striped progress-sm active">
+                      <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                        <span class="sr-only">77.74% At Risk</span>
+                      </div>
+                    </div> <!-- /.progress -->
+                    
+                  </div> <!-- /.progress-stat -->
+
+                  <div class="progress-stat">
+                      
+                    <div class="progress-stat-label">
+                      % Proficient
+                    </div>
+                    
+                    <div class="progress-stat-value">
+                      33.2%
+                    </div>
+                    
+                    <div class="progress progress-striped progress-sm active">
+                      <div class="progress-bar progress-bar-tertiary" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+                        <span class="sr-only">33% Proficient</span>
+                      </div>
+                    </div> <!-- /.progress -->
+                    
+                  </div> <!-- /.progress-stat -->
+
+                  <div class="progress-stat">
+                      
+                    <div class="progress-stat-label">
+                      % Advanced
+                    </div>
+                    
+                    <div class="progress-stat-value">
+                      42.7%
+                    </div>
+                    
+                    <div class="progress progress-striped progress-sm active">
+                      <div class="progress-bar progress-bar-secondary" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="width: 42%">
+                        <span class="sr-only">42.7% Advanced</span>
+                      </div>
+                    </div> <!-- /.progress -->
+                    
+                  </div> <!-- /.progress-stat -->
+
+             
+
+          
+
+            
+               
+
+              </div> <!-- /.portlet-body -->
+
+                
+                
+            </div> <!-- /.portlet -->
+            
+          </div> <!-- /.col -->
+
+
+          <div class="col-md-8 col-sm-7">
+           <div class="portlet">
+
+                <h4 class="content-title"><u>Reminders</u></h4>
+
+             <ul class="icons-list">
+                  <li>
+                   School: School award night, Thur Jan 28th, 7:30 Auditorium
+                  </li>
+                 <li>
+                   Psersonal: Meeting with Parent Thur Jan 28th, 8:30 Office
+                  </li>
+                 <li>
+                   Class: Teach 8th Grade, Earth Science, Thur Jan 28th, 9:30 Room 222
+                  </li>
+                </ul>
+             <a href="account-profile.html">Read More &nbsp;<i class="fa fa-external-link"></i></a>
+          <hr>
+
+
+          
+               
+               
+       <h4 class="content-title"><u>Open Tasks</u></h4>
+
+            <div class="well">
+
+
+              <ul class="icons-list text-md">
+
+                <li>
+                  <i class="icon-li fa fa-location-arrow"></i>
+
+                  <u>Rod</u> uploaded 6 files. 
+                  <br>
+                  <small>about 4 hours ago</small>
+                </li>
+
+                <li>
+                  <i class="icon-li fa fa-location-arrow"></i>
+
+                  <u>Rod</u> followed the research interest: <a href="javascript:;">Open Access Books in Linguistics</a>. 
+                  <br>
+                  <small>about 23 hours ago</small>
+                </li>
+
+                <li>
+                  <i class="icon-li fa fa-location-arrow"></i>
+
+                  <u>Rod</u> added 51 papers. 
+                  <br>
+                  <small>2 days ago</small>
+                </li>
+              </ul>
+ <a href="account-tasks.html">Read More &nbsp;<i class="fa fa-external-link"></i></a>
+            </div> <!-- /.well -->
+
+
+                    <h4 class="content-title"><u>Interest Discussions</u></h4>
+
+             <ul class="icons-list">
+                  <li>
+                   Science: Conference on K12 Labs (Palm Springs Ca) Feb 12-16 2014, Thur Jan 28th, 7:30 
+                  </li>
+                 <li>
+                   Math: New Holt Math 8th Grade Text Book Thur Jan 28th, 8:30 Office
+                  </li>
+                 <li>
+                   Science: Web Seminar "Teaching with Boxes" www.mathk12.com 7pm (PST) , Thur Jan 28th, 9:30 Room 222
+                  </li>
+                </ul>
+             <a href="account-profile.html">Read More &nbsp;<i class="fa fa-external-link"></i></a>
+          <hr>
+               
+                  <h4 class="content-title"><u>Discussions Threads</u></h4>
+
+             <ul class="icons-list">
+                  <li>
+                   Ron (St. Mary's School MO): Are you going to the Conference in Palm Springs?, Thur Jan 28th, 7:30 
+                  </li>
+                 <li>
+                   Lisa (STM College) Have you seen the latest Holt Math book Thur Jan 28th, 8:30 Office
+                  </li>
+                 <li>
+                   Mike (Chapman U) Do you know of a Lesson Plan teaching about Cells? Thur Jan 28th, 9:30 Room 222
+                  </li>
+                </ul>
+             <a href="account-profile.html">Read More &nbsp;<i class="fa fa-external-link"></i></a>
+          <hr>
+
+               
+        <div class="portlet-body">
+
+           <h4 class="portlet-title">
+                  <u>School Overview</u>
+                </h4>
+                <table class="table keyvalue-table">
+                  <tbody>
+                    <tr>
+                      <td class="kv-key"><i class="fa fa-gift kv-icon kv-icon-secondary"></i><a href="mainmenu.html" > Registered</a></td>
+                      <td class="kv-value">653 </td>
+                    </tr>
+                    <tr>
+                      <td class="kv-key"><i class="fa fa-gift kv-icon kv-icon-secondary"></i><a href="mainmenu.html" > Enrolled</a></td>
+                      <td class="kv-value">473 </td>
+                    </tr>
+                    <tr>
+                      <td class="kv-key"><i class="fa fa-gift kv-icon kv-icon-secondary"></i><a href="mainmenu.html" >Active Classes</a></td>
+                      <td class="kv-value">78</td>
+                    </tr>
+                    <tr>
+                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i><a href="mainmenu.html" >Unread Messages</a> </td>
+                      <td class="kv-value">39 </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+        </div> <!-- /.portlet-body -->
+
+      </div> <!-- /.portlet -->
+
+          </div> <!-- /.col -->
+
+        </div> <!-- /.row -->
+
+            
+
+        <div class="row">
+
+           
+
+            <div class="col-md-3">
+
+              
+          </div> <!-- /.col -->
+
+          <div class="col-md-4">
+            <div class="portlet">
+
+              <h4 class="portlet-title">
+                
+              </h4>
+
+              <div class="portlet-body">
+
+                <div id="auto-chart" class="chart-holder-200" hidden></div>
+              </div> <!-- /.portlet-body -->
+
+            </div> <!-- /.portlet -->
+            
+          </div> <!-- /.col -->
+
+        </div> <!-- /.row -->
+
+    </div> <!-- /.container -->
+
+  </div> <!-- .content -->
+
+</div> <!-- /#wrapper -->
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-left">Copyright &copy; 2013 Vivaldi Systems.</p>
+  </div>
+</footer>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Core JS -->
+<script src="./js/libs/jquery-1.10.2.min.js"></script>
+<script src="./js/libs/bootstrap.min.js"></script>
+
+<!--[if lt IE 9]>
+<script src="./js/libs/excanvas.compiled.js"></script>
+<![endif]-->
+
+<!-- Plugin JS -->
+<script src="./js/plugins/flot/jquery.flot.js"></script>
+<script src="./js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="./js/plugins/flot/jquery.flot.pie.js"></script>
+<script src="./js/plugins/flot/jquery.flot.resize.js"></script>
+
+<!-- App JS -->
+<script src="./js/mvpready-core.js"></script>
+<script src="./js/mvpready-admin.js"></script>
+
+<!-- Plugin JS -->
+<script src="./js/demos/flot/line.js"></script>
+<script src="./js/demos/flot/pie.js"></script>
+<script src="./js/demos/flot/auto.js"></script>
+
+
+    
+<!-- Bootstrap core JavaScript
+================================================== -->
+
+
+<!--[if lt IE 9]>
+<script src="./js/libs/excanvas.compiled.js"></script>
+<![endif]-->
+
+<!-- Plugin JS -->
+<script src="./js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="./js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
+
+<!-- Plugin JS -->
+<script src="./js/demos/table_demo.js"></script>
+    
+</body>
+</html>

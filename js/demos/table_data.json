@@ -1,0 +1,55 @@
+{
+  "id": -1,
+  "fieldErrors": [],
+  "sError": "",
+  "aaData": [
+    {
+      "DT_RowId": "row_1",
+      "classno": "1",
+      "code": "<a href='account-classedit.html' >SCI103</a>",
+      "description": "Earth Science 103",
+      "teacher": "Ms. M. Smith",
+      "room": "322A"
+    },
+    {
+      "DT_RowId": "row_2",
+       "classno": "2",
+      "code": "<a href='account-classedit.html' >SCI243</a>",
+      "description": "Earth Science 243",
+      "teacher": "Ms. M. Smith",
+      "room": "322A"
+    },
+    {
+      "DT_RowId": "row_3",
+	   "classno": "3",
+      "code": "<a href='account-classedit.html' >SCI101</a>",
+      "description": "Biology Science 101",
+      "teacher": "Ms. M. Jones",
+      "room": "322A"
+    },
+    {
+      "DT_RowId": "row_4",
+       "classno": "4",
+      "code": "<a href='account-classedit.html' >ENG201</a>",
+      "description": "British Poetry",
+      "teacher": "Mr James Mike",
+      "room": "422A"
+    },
+    {
+      "DT_RowId": "row_5",
+       "classno": "5",
+      "code": "<a href='account-classedit.html' >HST202</a>",
+      "description": "World History I",
+      "teacher": "Mr R Gona",
+      "room": "522A"
+    },
+      {
+      "DT_RowId": "row_6",
+       "classno": "6",
+      "code": "<a href='account-classedit.html' >HST203</a>",
+      "description": "World History II",
+      "teacher": "Mr R Gona",
+      "room": "522A"
+    }
+  ]
+}

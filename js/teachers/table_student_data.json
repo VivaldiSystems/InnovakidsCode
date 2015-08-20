@@ -1,0 +1,31 @@
+{
+  "id": -1,
+  "fieldErrors": [],
+  "sError": "",
+  "aaData": [
+    {
+      "DT_RowId": "row_1",
+      "studentid": "111",
+      "studentnumber": "<a href='student-profile.html' >35423</a>",
+      "lastname": "Earley",
+      "firstname": "Rick",
+      "middlename": "T"
+    },
+       {
+      "DT_RowId": "row_2",
+      "studentid": "112",
+      "studentnumber": "<a href='student-profile.html' >35423</a>",
+      "lastname": "Smith",
+      "firstname": "Sam",
+      "middlename": ""
+    },
+       {
+      "DT_RowId": "row_3",
+      "studentid": "113",
+      "studentnumber": "<a href='student-profile.html' >35423</a>",
+      "lastname": "Ramsey",
+      "firstname": "Mike",
+      "middlename": "Song"
+    }
+  ]
+}

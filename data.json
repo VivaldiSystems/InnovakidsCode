@@ -1,0 +1,27 @@
+{ 'markers':[
+
+        {'meta':'row-start','type':'dates','calDate': {'month':12,'day':30,'year':2012 } },
+        {'meta':'cell','type':'dates','calDate': {'month':12,'day':31,'year':2012 } },
+        {'meta':'cell','type':'dates','calDate': {'month':01,'day':01,'year':2013 } },
+        {'meta':'cell','type':'dates','calDate': {'month':01,'day':02,'year':2013 } },
+        {'meta':'cell','type':'dates','calDate': {'month':01,'day':03,'year':2013 } },
+        {'meta':'cell','type':'dates','calDate': {'month':01,'day':04,'year':2013 } },
+        {'meta':'row-end','type':'dates','calDate': {'month':01,'day':05,'year':2013 } },
+        
+        {'meta':'row-start','type':'old-month'},
+        {'meta':'cell','type':'old-month'},
+        {'meta':'cell','type':'present'},
+        {'meta':'cell','type':'absent'},
+        {'meta':'cell','type':'present'},
+        {'meta':'cell','type':'present'},
+        {'meta':'row-end','type':'absent'},
+        
+        {'meta':'row-start','type':'old-month'},                                            
+        {'meta':'cell','type':'old-month'},
+        {'meta':'cell','type':'present'},
+        {'meta':'cell','type':'absent'},
+        {'meta':'cell','type':'present'},
+        {'meta':'cell','type':'present'},
+        {'meta':'row-end','type':'absent'}
+
+]}

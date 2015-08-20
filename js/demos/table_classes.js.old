@@ -1,0 +1,15 @@
+$.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: "http://www.innovakids.com/Service.svc/getData",
+        dataType: "html",
+        success: function (jsonText) {
+
+           alert(jsonText);
+
+        },
+        error: function (msg) {
+            alert("Error: " + msg.d);
+        }
+    });
+

@@ -1,0 +1,15 @@
+{
+  "id": -1,
+  "fieldErrors": [],
+  "sError": "",
+  "aaData": [
+    {
+      "DT_RowId": "row_1",
+      "studentid": "111",
+      "studentnumber": "<a href='account-classedit.html' >35423</a>",
+      "lastname": "Earley",
+      "firstname": "Rick",
+      "middlename": "T"
+    }
+  ]
+}
